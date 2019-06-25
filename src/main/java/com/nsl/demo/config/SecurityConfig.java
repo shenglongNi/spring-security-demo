@@ -3,6 +3,7 @@ package com.nsl.demo.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -14,6 +15,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     /**
@@ -30,9 +32,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .authorizeRequests()
                     .antMatchers("/home")
                         .permitAll()
-                    .anyRequest()
+                    .antMatchers("/secure")
                         .authenticated()
-                    .and()
+                    .antMatchers("/needRole")
+                            .authenticated()
+                        .and()
                 .formLogin()
 //                    .loginPage("/customLogin")  //自定义login Page
                     .permitAll()
@@ -51,8 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     public UserDetailsService userDetailsServiceBean() {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withUsername("nsl").passwordEncoder(s -> new BCryptPasswordEncoder().encode("111111")).roles("ADMIN").build());
-        manager.createUser(User.withUsername("zl").password("222222").roles("USER", "ADMIN").build());
+        manager.createUser(User.withUsername("ZL").passwordEncoder(s -> passwordEncoderBean().encode("111111")).roles("USER").build());
+        manager.createUser(User.withUsername("nsl").passwordEncoder(s -> passwordEncoderBean().encode("222222")).roles("USER", "ADMIN").build());
         return manager;
     }
 
