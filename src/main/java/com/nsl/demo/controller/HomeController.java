@@ -2,6 +2,8 @@ package com.nsl.demo.controller;
 
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +33,14 @@ public class HomeController {
     @PreAuthorize("hasRole('ADMIN')")  //进方法之前进行权限认证
     public String needRolePage() {
         System.out.println("===========进入==============");
-        return "this page need Roles";
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = null;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        return "this page need Roles " + username;
     }
 
 }
