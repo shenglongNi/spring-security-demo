@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+
+    <properties resource="generator.properties"/>
+    <context id="context" targetRuntime="MyBatis3">
+
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection connectionURL="${datasource.url}"
+                        driverClass="${datasource.driver-class-name}"
+                        password="${datasource.password}"
+                        userId="${datasource.username}"/>
+
+
+        <javaTypeResolver type="DEFAULT">
+
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.nsl.demo.model"
+                            targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="ANNOTATEDMAPPER"
+                             targetPackage="com.nsl.demo.mapper"
+                             targetProject="src/main/java" >
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+
+
+
+
+        <table tableName="system_user" schema="security_demo" domainObjectName="User">
+
+
+        </table>
+
+
+    </context>
+</generatorConfiguration>
+    
