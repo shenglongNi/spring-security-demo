@@ -17,7 +17,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 1. 自定义login page
@@ -31,17 +31,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/home")
-                        .permitAll()
-                    .antMatchers("/secure")
-                        .authenticated()
-                    .antMatchers("/needRole")
-                            .authenticated()
-                        .and()
+                .antMatchers("/home")
+                .permitAll()
+                .antMatchers("/secure")
+                .authenticated()
+                .antMatchers("/needRole")
+                .authenticated()
+                .and()
                 .formLogin()
 //                    .loginPage("/customLogin")  //自定义login Page
-                    .permitAll()
-                    .and()
+                .permitAll()
+                .and()
                 .logout();
 
     }

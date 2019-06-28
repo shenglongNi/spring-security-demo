@@ -67,7 +67,7 @@ create table if not exists system_role_authority
 
 create table if not exists system_user
 (
-    id char(22) not null
+    id NUMERIC(22) not null
         primary key,
     username varchar(30) not null,
     password char(60) not null,
